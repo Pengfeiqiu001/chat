@@ -8,6 +8,12 @@ import { buildIpRateLimiter } from "./rateLimit.js";
 const app = express();
 app.use(express.json({ limit: "1mb" }));
 app.use(morgan("tiny"));
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+app.options("/chat", cors());
 
 // CORS allowlist
 const allowList = (process.env.CORS_ORIGINS || "")
